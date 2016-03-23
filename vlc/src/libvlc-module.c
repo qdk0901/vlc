@@ -1430,6 +1430,9 @@ vlc_module_begin ()
     set_subcategory( SUBCAT_AUDIO_GENERAL )
     add_category_hint( N_("Audio"), AOUT_CAT_LONGTEXT , false )
 
+	add_integer( "is-quad-channel", 1, N_("Is Quad Channel"), N_("Is Quad Channel"), false )
+	add_integer( "is-media-encrypted", 1, N_("Is Media Encrypted"), N_("Is Media Encrypted"), false )
+				 
     add_bool( "audio", 1, AUDIO_TEXT, AUDIO_LONGTEXT, false )
         change_safe ()
     add_float( "gain", 1., GAIN_TEXT, GAIN_LONGTEXT, true )

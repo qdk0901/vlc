@@ -328,12 +328,22 @@ error:
     return NULL;
 }
 
+static void decrypt_Buffer(unsigned char* buf, int len)
+{
+	int i;
+	for (i = 0; i < len; i++)
+		buf[i] ^= 0xdb;
+}
+
 static ssize_t stream_ReadRaw(stream_t *s, void *buf, size_t len)
 {
     stream_priv_t *priv = (stream_priv_t *)s;
     size_t copy = 0;
     ssize_t ret = 0;
 
+	int is_media_encrypted = var_InheritInteger( s, "is-media-encrypted" );
+	void* buff_origin = buf;
+	
     while (len > 0)
     {
         if (vlc_killed())
@@ -353,6 +363,9 @@ static ssize_t stream_ReadRaw(stream_t *s, void *buf, size_t len)
         copy += ret;
         priv->offset += ret;
     }
+	
+	if (is_media_encrypted && copy > 0)
+		decrypt_Buffer(buff_origin, copy);
 
     return (copy > 0) ? (ssize_t)copy : ret;
 }

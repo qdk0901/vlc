@@ -536,6 +536,8 @@ static int Open (vlc_object_t *obj)
     aout_sys_t *sys;
     SLresult result;
 
+	is_quad_channel = var_InheritInteger( aout, "is-quad-channel" );
+	
     aout->sys = sys = calloc(1, sizeof(*sys));
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
